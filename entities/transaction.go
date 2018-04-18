@@ -14,8 +14,8 @@ type Transaction struct {
 	DateTime time.Time
 }
 
-// NewTranaction initilizes transaction
-func NewTranaction(acc *Account, amount int64, subj string) (*Transaction, error) {
+// NewTransaction initilizes transaction
+func NewTransaction(acc *Account, amount int64, subj string) (*Transaction, error) {
 	var err error
 
 	if acc == nil {

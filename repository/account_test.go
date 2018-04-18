@@ -16,6 +16,24 @@ func TestCreateAccount(t *testing.T) {
 	if acc.ID == 0 {
 		t.Error("Expected", "to be saved", "actually", "no")
 	}
+}
+
+func TestUpdateBalance(t *testing.T) {
+	cl, _ := entities.NewClient("John Jonson", "john@wallstreet.com", 18005687625)
+	CreateClient(cl)
+
+	acc, _ := entities.NewAccount(cl, 11000)
+
+	CreateAccount(acc)
+
+	acc.Balance = 9000
+
+	UpdateBalance(acc)
+
+	dbAcc := GetAccount(acc.ID)
+	if dbAcc == nil || dbAcc.ID != acc.ID || dbAcc.Balance != 9000 {
+		t.Error("Expected", "balance updated", "actually", "no")
+	}
 
 }
 

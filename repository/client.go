@@ -3,10 +3,9 @@ package repository
 import (
 	"banco_de_espana/entities"
 	"fmt"
-
-	_ "github.com/mattn/go-sqlite3"
 )
 
+// CreateClient ...
 func CreateClient(cl *entities.Client) {
 	stmt, err := connDB.Prepare("INSERT INTO clients(name, email, phone) values(?, ?, ?)")
 
@@ -23,6 +22,7 @@ func CreateClient(cl *entities.Client) {
 	cl.ID = id
 }
 
+// GetClient ...
 func GetClient(id int64) *entities.Client {
 	rows, err := connDB.Query("Select * FROM clients where id = ? limit 1", id)
 

@@ -3,10 +3,9 @@ package repository
 import (
 	"banco_de_espana/entities"
 	"time"
-
-	_ "github.com/mattn/go-sqlite3"
 )
 
+// CreateTransaction ...
 func CreateTransaction(tr *entities.Transaction) {
 	stmt, err := connDB.Prepare("INSERT INTO transactions(account_id, amount, subject, timestamp) values(?, ?, ?, ?)")
 
@@ -23,6 +22,7 @@ func CreateTransaction(tr *entities.Transaction) {
 	tr.ID = id
 }
 
+// GetTransaction ...
 func GetTransaction(id int64) *entities.Transaction {
 	rows, err := connDB.Query("Select * FROM transactions where id = ? limit 1", id)
 
