@@ -1,9 +1,19 @@
 package repository
 
-import "database/sql"
+import (
+	"database/sql"
+)
 
-func DBConnection() *sql.DB {
-	db, err := sql.Open("sqlite3", "./bank.db")
+var connDB = dbConnect()
+
+func dbConnect() *sql.DB {
+	connDB, err := sql.Open("sqlite3", "file:/tmp/bank.db?cache=shared&mode=rwc")
 	checkErr(err)
-	return db
+	return connDB
+}
+
+func checkErr(err error) {
+	if err != nil {
+		panic(err)
+	}
 }

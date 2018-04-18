@@ -4,13 +4,13 @@ import "fmt"
 
 // Account of the bank
 type Account struct {
-	ID      int
+	ID      int64
 	Client  *Client
-	Balance float64
+	Balance int64
 }
 
 // NewAccount ...
-func NewAccount(cl *Client, b float64) (*Account, error) {
+func NewAccount(cl *Client, b int64) (*Account, error) {
 	var err error
 
 	if cl == nil {

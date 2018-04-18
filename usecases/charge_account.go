@@ -5,7 +5,7 @@ import (
 )
 
 // ChargeAccount ...
-func ChargeAccount(acc *entities.Account, amount float64) error {
+func ChargeAccount(acc *entities.Account, amount int64) error {
 	var err error
 
 	acc.Balance -= amount
@@ -14,7 +14,7 @@ func ChargeAccount(acc *entities.Account, amount float64) error {
 }
 
 // CreditAccount ...
-func CreditAccount(acc *entities.Account, amount float64) error {
+func CreditAccount(acc *entities.Account, amount int64) error {
 	var err error
 
 	acc.Balance += amount

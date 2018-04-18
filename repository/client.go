@@ -1,19 +1,18 @@
 package repository
 
 import (
-	"time"
-
 	"banco_de_espana/entities"
+	"fmt"
 
 	_ "github.com/mattn/go-sqlite3"
 )
 
 func CreateClient(cl *entities.Client) {
-	stmt, err := DBConnection().Prepare("INSERT INTO clients(name, email, phone, created_at) values(?, ?, ?, ?)")
+	stmt, err := connDB.Prepare("INSERT INTO clients(name, email, phone) values(?, ?, ?)")
 
 	checkErr(err)
 
-	res, err := stmt.Exec(cl.Name, cl.Email, cl.Phone, time.Now())
+	res, err := stmt.Exec(cl.Name, cl.Email, cl.Phone)
 
 	checkErr(err)
 
@@ -25,16 +24,19 @@ func CreateClient(cl *entities.Client) {
 }
 
 func GetClient(id int64) *entities.Client {
-	rows, err := DBConnection().Query("Select * FROM clients")
+	rows, err := connDB.Query("Select * FROM clients where id = ? limit 1", id)
+
+	checkErr(err)
+
 	cl := entities.Client{}
+	fmt.Println(rows)
 
-	err = rows.Scan(&cl.ID, &cl.Name, &cl.Email, &cl.Phone, &cl.CreatedAt)
+	if rows.Next() {
+		err = rows.Scan(&cl.ID, &cl.Name, &cl.Email, &cl.Phone)
 
-	return cl
-}
-
-func checkErr(err error) {
-	if err != nil {
-		panic(err)
+		checkErr(err)
+		return &cl
 	}
+
+	return nil
 }
