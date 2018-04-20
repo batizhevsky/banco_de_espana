@@ -2,41 +2,52 @@ package main
 
 import (
 	"fmt"
-
-	"banco_de_espana/entities"
-	"banco_de_espana/repository"
+	"log"
+	"net/http"
+	"regexp"
 )
 
+type route struct {
+	pattern *regexp.Regexp
+	handler http.Handler
+}
+
+type RegexHandler struct {
+	routes []*route
+}
+
+func (h *RegexHandler) Handler(pattern *regexp.Regexp, handler http.Handler) {
+	h.routes = append(h.routes, &route{pattern, handler})
+}
+
+func (h *RegexHandler) HandleFunc(pattern *regexp.Regexp, handler func(http.ResponseWriter, *http.Request)) {
+	h.routes = append(h.routes, &route{pattern, http.HandlerFunc(handler)})
+}
+
 func main() {
-	cl, err := entities.NewClient("John Jonson", "john@wallstreet.com", 18005687625)
+	http.HandleFunc("/test", sayhellotest)
+	http.HandleFunc("/", sayhelloName)
 
+	err := http.ListenAndServe(":9090", nil)
 	if err != nil {
-		panic("can't create a client")
+		log.Fatal("ListenAndServe: ", err)
 	}
+}
 
-	repository.CreateClient(cl)
+func sayhellotest(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Other!!!!!")
+	r.ParseForm()
+	fmt.Println(r.Form)
+	fmt.Println("path", r.URL.Path)
+	fmt.Println(r.Form["url_long"])
+	fmt.Fprintf(w, "Hello astaxie!")
+}
 
-	fmt.Println(*cl)
-
-	acc, err := entities.NewAccount(cl, 100.00)
-
-	if err != nil {
-		println(err)
-		panic("can't create an account")
-	}
-
-	repository.CreateAccount(acc)
-
-	fmt.Println(*acc)
-
-	acc2, err := entities.NewAccount(cl, 50.00)
-
-	if err != nil {
-		println(err)
-		panic("can't create an account")
-	}
-
-	repository.CreateAccount(acc2)
-
-	fmt.Println(*acc2)
+func sayhelloName(w http.ResponseWriter, r *http.Request) {
+	counter++
+	println(counter)
+	r.ParseForm()
+	fmt.Println(r.Form)
+	fmt.Println("path", r.URL.Path)
+	fmt.Println(r.Form["url_long"])
 }

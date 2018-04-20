@@ -10,4 +10,8 @@ func TestCreateAccount(t *testing.T) {
 	if err != nil {
 		t.Error("Expected", "record should be saved", "but got", err)
 	}
+
+	if cl.ID == 0 {
+		t.Error("Expected", "has an ID", "but got", 0)
+	}
 }
