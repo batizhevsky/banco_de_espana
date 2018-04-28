@@ -2,6 +2,7 @@ package repository
 
 import (
 	"banco_de_espana/entities"
+	"errors"
 	"fmt"
 )
 
@@ -39,4 +40,9 @@ func GetClient(id int64) *entities.Client {
 	}
 
 	return nil
+}
+
+// Provide a list of all clients
+func ListClients() ([]entities.Client, error) {
+	return []entities.Client{}, errors.New("Not implemented")
 }

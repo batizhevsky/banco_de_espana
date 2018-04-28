@@ -33,3 +33,13 @@ func TestGetClient(t *testing.T) {
 	}
 
 }
+
+func TestListClients(t *testing.T) {
+	cl1, _ := entities.NewClient("John Jonson", "john@wallstreet.com", 18005687625)
+	cl2, _ := entities.NewClient("Jack Jackson", "jack@wallstreet.com", 18005687626)
+	CreateClient(cl1)
+	CreateClient(cl2)
+
+	list, err := ListClients()
+
+}
