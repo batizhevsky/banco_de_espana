@@ -1,53 +1,68 @@
 package main
 
 import (
+	"banco_de_espana/repository"
+	"banco_de_espana/usecases"
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
-	"regexp"
+	"strconv"
+
+	"github.com/gorilla/mux"
 )
 
-type route struct {
-	pattern *regexp.Regexp
-	handler http.Handler
-}
-
-type RegexHandler struct {
-	routes []*route
-}
-
-func (h *RegexHandler) Handler(pattern *regexp.Regexp, handler http.Handler) {
-	h.routes = append(h.routes, &route{pattern, handler})
-}
-
-func (h *RegexHandler) HandleFunc(pattern *regexp.Regexp, handler func(http.ResponseWriter, *http.Request)) {
-	h.routes = append(h.routes, &route{pattern, http.HandlerFunc(handler)})
-}
-
 func main() {
-	http.HandleFunc("/test", sayhellotest)
-	http.HandleFunc("/", sayhelloName)
+	usecases.CreateClient("test", "test@go.com", 299932323)
 
-	err := http.ListenAndServe(":9090", nil)
-	if err != nil {
-		log.Fatal("ListenAndServe: ", err)
+	r := mux.NewRouter()
+	r.HandleFunc("/", HomeHandler).Methods("GET")
+	r.HandleFunc("/clients", ClientsHandler).Methods("GET")
+	r.HandleFunc("/clients/{id}", ClientHandler).Methods("GET")
+
+	http.Handle("/", r)
+
+	src := &http.Server{
+		Addr:    "0.0.0.0:9090",
+		Handler: logRequest(r),
 	}
+	src.ListenAndServe()
+
+	// func() {
+	// 	if err := src.ListenAndServe(); err != nil {
+	// 		log.Println(err)
+	// 	}
+	// }()
 }
 
-func sayhellotest(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("Other!!!!!")
-	r.ParseForm()
-	fmt.Println(r.Form)
-	fmt.Println("path", r.URL.Path)
-	fmt.Println(r.Form["url_long"])
-	fmt.Fprintf(w, "Hello astaxie!")
+func logRequest(handler http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		log.Printf("%s %s %s\n", r.RemoteAddr, r.Method, r.URL)
+		handler.ServeHTTP(w, r)
+	})
 }
 
-func sayhelloName(w http.ResponseWriter, r *http.Request) {
-	counter++
-	println(counter)
-	r.ParseForm()
-	fmt.Println(r.Form)
-	fmt.Println("path", r.URL.Path)
-	fmt.Println(r.Form["url_long"])
+func HomeHandler(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusOK)
+	fmt.Fprintf(w, "Hello Customer!")
+}
+
+func ClientsHandler(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusOK)
+	fmt.Fprintf(w, "{data: []}")
+}
+
+func ClientHandler(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+
+	id, err := strconv.ParseInt(vars["id"], 0, 64)
+
+	if err == nil && id != 0 {
+		w.WriteHeader(http.StatusOK)
+
+		client := repository.GetClient(id)
+		json, _ := json.Marshal(client)
+
+		fmt.Fprintf(w, "{data: [%s]}", json)
+	}
 }
