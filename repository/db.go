@@ -6,12 +6,12 @@ import (
 	_ "github.com/mattn/go-sqlite3" // ...
 )
 
-var connDB = dbConnect()
+var ConnDB = dbConnect()
 
 func dbConnect() *sql.DB {
-	connDB, err := sql.Open("sqlite3", "file:/tmp/bank.sqlite?cache=shared&mode=rwc")
+	ConnDB, err := sql.Open("sqlite3", "file:/tmp/bank.sqlite?cache=shared&mode=rwc")
 	checkErr(err)
-	return connDB
+	return ConnDB
 }
 
 func checkErr(err error) {

@@ -7,7 +7,7 @@ import (
 
 // CreateTransaction ...
 func CreateTransaction(tr *entities.Transaction) {
-	stmt, err := connDB.Prepare("INSERT INTO transactions(account_id, amount, subject, timestamp) values(?, ?, ?, ?)")
+	stmt, err := ConnDB.Prepare("INSERT INTO transactions(account_id, amount, subject, timestamp) values(?, ?, ?, ?)")
 
 	checkErr(err)
 
@@ -24,7 +24,7 @@ func CreateTransaction(tr *entities.Transaction) {
 
 // GetTransaction ...
 func GetTransaction(id int64) *entities.Transaction {
-	rows, err := connDB.Query("Select * FROM transactions where id = ? limit 1", id)
+	rows, err := ConnDB.Query("Select * FROM transactions where id = ? limit 1", id)
 
 	checkErr(err)
 

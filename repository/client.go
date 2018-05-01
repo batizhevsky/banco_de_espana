@@ -8,7 +8,7 @@ import (
 
 // CreateClient ...
 func CreateClient(cl *entities.Client) {
-	stmt, err := connDB.Prepare("INSERT INTO clients(name, email, phone) values(?, ?, ?)")
+	stmt, err := ConnDB.Prepare("INSERT INTO clients(name, email, phone) values(?, ?, ?)")
 
 	checkErr(err)
 
@@ -25,7 +25,7 @@ func CreateClient(cl *entities.Client) {
 
 // GetClient ...
 func GetClient(id int64) *entities.Client {
-	rows, err := connDB.Query("Select * FROM clients where id = ? limit 1", id)
+	rows, err := ConnDB.Query("Select * FROM clients where id = ? limit 1", id)
 
 	checkErr(err)
 
