@@ -1,6 +1,7 @@
 package main
 
 import (
+	"banco_de_espana/client/usecases"
 	"flag"
 	"fmt"
 	"io"
@@ -49,19 +50,11 @@ func main() {
 
 	switch {
 	case createClientCommand.Parsed():
-		if *newClientNamePtr == "" {
-			println("Please provide a name.\n")
+		if err := usecases.CreateClient(*newClientNamePtr, *newClientEmailPtr, *newClientPhonePtr); err != nil {
+			fmt.Printf("Can't create a client with params name %v, email: %v, phone %v. Got an error: %v\n", *newClientNamePtr, *newClientEmailPtr, *newClientPhonePtr, err)
 			createClientCommand.PrintDefaults()
 			os.Exit(1)
 		}
-
-		if *newClientEmailPtr == "" {
-			println("Please provide a email.\n")
-			createClientCommand.PrintDefaults()
-			os.Exit(1)
-		}
-
-		fmt.Printf("showClientCommand.createClientCommand for name %v, email: %v, phone %v\n", *newClientNamePtr, *newClientEmailPtr, *newClientPhonePtr)
 	case showClientCommand.Parsed():
 		if *clientIDPtr == 0 {
 			println("Please provide a client ID.\n")

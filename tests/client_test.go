@@ -7,7 +7,7 @@ import (
 )
 
 func TestCreateClient(t *testing.T) {
-	cl, _ := entities.NewClient("John Jonson", "john@wallstreet.com", 18005687625)
+	cl, _ := entities.NewClient("John Jonson", "john@wallstreet.com", "18005687625")
 	repository.CreateClient(cl)
 
 	if cl.ID == 0 {
@@ -17,7 +17,7 @@ func TestCreateClient(t *testing.T) {
 }
 
 func TestGetClient(t *testing.T) {
-	cl, _ := entities.NewClient("John Jonson", "john@wallstreet.com", 18005687625)
+	cl, _ := entities.NewClient("John Jonson", "john@wallstreet.com", "18005687625")
 	repository.CreateClient(cl)
 
 	dbCl := repository.GetClient(cl.ID)
@@ -35,8 +35,8 @@ func TestGetClient(t *testing.T) {
 }
 
 func TestListClients(t *testing.T) {
-	cl1, _ := entities.NewClient("John Jonson", "john@wallstreet.com", 18005687625)
-	cl2, _ := entities.NewClient("Jack Jackson", "jack@wallstreet.com", 18005687626)
+	cl1, _ := entities.NewClient("John Jonson", "john@wallstreet.com", "+18005687625")
+	cl2, _ := entities.NewClient("Jack Jackson", "jack@wallstreet.com", "+18005687626")
 	repository.CreateClient(cl1)
 	repository.CreateClient(cl2)
 

@@ -1,20 +1,23 @@
-Create Table if not exists clients(
-    id integer primary key asc,
+CREATE TABLE IF NOT EXISTS `clients`(
+    id INT NOT NULL AUTO_INCREMENT,
     name text,
     email text,
-    phone integer
+    phone text,
+    PRIMARY KEY (id)
 );
 
-Create Table if not exists accounts(
-    id integer primary key asc,
+CREATE TABLE IF NOT EXISTS `accounts`(
+    id INT NOT NULL AUTO_INCREMENT,
     client_id integer,
-    balance integer
+    balance integer,
+    PRIMARY KEY (id)
 );
 
-Create Table if not exists transactions(
-    id integer primary key asc,
+CREATE TABLE IF NOT EXISTS `transactions`(
+    id INT NOT NULL AUTO_INCREMENT,
     account_id integer,
     amount integer,
     subject text,
-    timestamp integer 
+    timestamp integer,
+    PRIMARY KEY (id)
 );

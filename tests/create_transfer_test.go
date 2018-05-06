@@ -8,7 +8,7 @@ import (
 )
 
 func TestCreateTransfer(t *testing.T) {
-	cl, _ := entities.NewClient("John Jonson", "john@wallstreet.com", 18005687625)
+	cl, _ := entities.NewClient("John Jonson", "john@wallstreet.com", "18005687625")
 	fromAcc, _ := entities.NewAccount(cl, 100.00)
 	toAcc, _ := entities.NewAccount(cl, 20.00)
 

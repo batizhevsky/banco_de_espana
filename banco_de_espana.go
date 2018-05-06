@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	usecases.CreateClient("test", "test@go.com", 299932323)
+	usecases.CreateClient("test", "test@go.com", "299932323")
 
 	infrastructure.RunWebserver()
 }

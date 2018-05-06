@@ -9,11 +9,11 @@ type Client struct {
 	ID    int64
 	Name  string
 	Email string
-	Phone uint64
+	Phone string
 }
 
 // NewClient initialize a new client
-func NewClient(name string, email string, phone uint64) (*Client, error) {
+func NewClient(name string, email string, phone string) (*Client, error) {
 	var err error
 
 	if name == "" {
@@ -24,7 +24,7 @@ func NewClient(name string, email string, phone uint64) (*Client, error) {
 		err = fmt.Errorf("E-Mail should have a value")
 	}
 
-	if phone == 0 {
+	if phone == "" {
 		err = fmt.Errorf("Phone should have a value")
 	}
 

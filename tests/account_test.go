@@ -7,7 +7,7 @@ import (
 )
 
 func TestCreateAccount(t *testing.T) {
-	cl, _ := entities.NewClient("John Jonson", "john@wallstreet.com", 18005687625)
+	cl, _ := entities.NewClient("John Jonson", "john@wallstreet.com", "18005687625")
 	repository.CreateClient(cl)
 
 	acc, _ := entities.NewAccount(cl, 11000)
@@ -20,7 +20,7 @@ func TestCreateAccount(t *testing.T) {
 }
 
 func TestUpdateBalance(t *testing.T) {
-	cl, _ := entities.NewClient("John Jonson", "john@wallstreet.com", 18005687625)
+	cl, _ := entities.NewClient("John Jonson", "john@wallstreet.com", "18005687625")
 	repository.CreateClient(cl)
 
 	acc, _ := entities.NewAccount(cl, 11000)
@@ -39,7 +39,7 @@ func TestUpdateBalance(t *testing.T) {
 }
 
 func TestGetAccount(t *testing.T) {
-	cl, _ := entities.NewClient("John Jonson", "john@wallstreet.com", 18005687625)
+	cl, _ := entities.NewClient("John Jonson", "john@wallstreet.com", "18005687625")
 	repository.CreateClient(cl)
 
 	acc, _ := entities.NewAccount(cl, 11000)

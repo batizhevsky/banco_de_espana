@@ -5,7 +5,7 @@ import (
 	"banco_de_espana/repository"
 )
 
-func CreateClient(name string, email string, phone uint64) (*entities.Client, error) {
+func CreateClient(name string, email string, phone string) (*entities.Client, error) {
 	cl, err := entities.NewClient(name, email, phone)
 
 	repository.CreateClient(cl)
