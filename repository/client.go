@@ -2,8 +2,6 @@ package repository
 
 import (
 	"banco_de_espana/entities"
-	"errors"
-	"fmt"
 )
 
 // CreateClient ...
@@ -30,7 +28,6 @@ func GetClient(id int64) *entities.Client {
 	checkErr(err)
 
 	cl := entities.Client{}
-	fmt.Println(rows)
 
 	if rows.Next() {
 		err = rows.Scan(&cl.ID, &cl.Name, &cl.Email, &cl.Phone)
@@ -42,7 +39,15 @@ func GetClient(id int64) *entities.Client {
 	return nil
 }
 
-// Provide a list of all clients
+// ListClients provides a list of all clients
 func ListClients() ([]entities.Client, error) {
-	return []entities.Client{}, errors.New("Not implemented")
+	rows, err := ConnDB.Query("Select * FROM clients")
+
+	list := make([]entities.Client, 0)
+	if rows.Next() {
+		cl := entities.Client{}
+		err = rows.Scan(&cl.ID, &cl.Name, &cl.Email, &cl.Phone)
+		list = append(list, cl)
+	}
+	return list, err
 }

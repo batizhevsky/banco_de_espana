@@ -8,7 +8,7 @@ import (
 )
 
 func TestChargeAccount(t *testing.T) {
-	cl, _ := entities.NewClient("John Jonson", "john@wallstreet.com", 18005687625)
+	cl, _ := entities.NewClient("John Jonson", "john@wallstreet.com", "18005687625")
 	acc, _ := entities.NewAccount(cl, 100.00)
 
 	usecases.ChargeAccount(acc, 90.00)
@@ -19,7 +19,7 @@ func TestChargeAccount(t *testing.T) {
 }
 
 func TestCreditAccount(t *testing.T) {
-	cl, _ := entities.NewClient("John Jonson", "john@wallstreet.com", 18005687625)
+	cl, _ := entities.NewClient("John Jonson", "john@wallstreet.com", "18005687625")
 	acc, _ := entities.NewAccount(cl, 10.0)
 
 	usecases.CreditAccount(acc, 50.0)

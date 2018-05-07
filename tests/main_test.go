@@ -12,7 +12,7 @@ func TestMain(m *testing.M) {
 	ensureTableExists()
 
 	code := m.Run()
-	clearTable()
+	ClearTable()
 
 	os.Exit(code)
 
@@ -24,9 +24,10 @@ func ensureTableExists() {
 	}
 }
 
-func clearTable() {
+func ClearTable() {
 	repository.ConnDB.Exec("DELETE FROM clients")
 	repository.ConnDB.Exec("DELETE FROM accounts")
+	repository.ConnDB.Exec("DELETE FROM transactions")
 }
 
 func tableCreationQuery() string {

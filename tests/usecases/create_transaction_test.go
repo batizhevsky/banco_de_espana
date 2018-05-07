@@ -8,7 +8,7 @@ import (
 )
 
 func TestCreateTransaction(t *testing.T) {
-	cl, _ := entities.NewClient("John Jonson", "john@wallstreet.com", 18005687625)
+	cl, _ := entities.NewClient("John Jonson", "john@wallstreet.com", "+18005687625")
 	acc, _ := entities.NewAccount(cl, 100.00)
 
 	usecases.CreateTransaction(acc, 70.00)

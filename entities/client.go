@@ -6,7 +6,7 @@ import (
 
 // Client of a bank
 type Client struct {
-	ID    int64
+	ID    int64 `json:"id"`
 	Name  string
 	Email string
 	Phone string

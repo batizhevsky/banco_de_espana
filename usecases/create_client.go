@@ -8,7 +8,12 @@ import (
 func CreateClient(name string, email string, phone string) (*entities.Client, error) {
 	cl, err := entities.NewClient(name, email, phone)
 
-	repository.CreateClient(cl)
+	if err != nil {
+		return cl, err
+	}
 
-	return cl, err
+	repository.CreateClient(cl)
+	SendWelcomeEmailAsync(cl)
+
+	return cl, nil
 }

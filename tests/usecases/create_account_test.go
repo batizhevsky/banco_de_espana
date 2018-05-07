@@ -6,7 +6,7 @@ import (
 )
 
 func TestCreateAccount(t *testing.T) {
-	cl, err := usecases.CreateClient("tester", "email@do.com", 18005687625)
+	cl, err := usecases.CreateClient("tester", "email@do.com", "+18005687625")
 
 	if err != nil {
 		t.Error("Expected", "record should be saved", "but got", err)
