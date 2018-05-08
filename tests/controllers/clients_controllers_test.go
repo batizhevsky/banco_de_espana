@@ -10,7 +10,7 @@ import (
 )
 
 func TestClientsIndex(t *testing.T) {
-	// tests.ClearTable()
+	repository.ClearTables()
 
 	cl1, _ := entities.NewClient("John Jonson", "john@wallstreet.com", "+18005687625")
 	cl2, _ := entities.NewClient("Jack Jackson", "jack@wallstreet.com", "+18005687626")

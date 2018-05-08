@@ -2,45 +2,38 @@ package tests
 
 import (
 	"banco_de_espana/repository"
+	"io/ioutil"
 	"log"
 	"os"
+	"strings"
 	"testing"
 	// "."
 )
 
 func TestMain(m *testing.M) {
-	ensureTableExists()
+	repository.EnsureTableExists()
+	repository.ClearTables()
 
 	code := m.Run()
-	ClearTable()
+	repository.ClearTables()
 
 	os.Exit(code)
-
 }
 
 func ensureTableExists() {
-	if _, err := repository.ConnDB.Exec(tableCreationQuery()); err != nil {
-		log.Fatal(err)
+	file, err := ioutil.ReadFile("../infrastructure/schema_up.sql")
+	if err != nil {
+		panic(err)
+	}
+
+	requests := strings.Split(string(file), ";") // supposed it is not contain csv
+	for _, request := range requests {
+		if request == "" {
+			continue
+		}
+
+		if _, err := repository.ConnDB.Exec(request); err != nil {
+			log.Fatal(err)
+		}
 	}
 }
-
-func ClearTable() {
-	repository.ConnDB.Exec("DELETE FROM clients")
-	repository.ConnDB.Exec("DELETE FROM accounts")
-	repository.ConnDB.Exec("DELETE FROM transactions")
-}
-
-func tableCreationQuery() string {
-	return "select 1;"
-}
-
-// func tableCreationQuery() string {
-// 	sql, err := ioutil.ReadFile("../infrastructure/schema_up.sql")
-// 	println(string(sql))
-// 	if err != nil {
-// 		panic(err)
-// 	}
-
-// 	return string(sql)
-// 	return "select 1;"
-// }
